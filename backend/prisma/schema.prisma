@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  password  String
+  name      String
+  sessions  Session[]
+  createdAt DateTime
+}
+
+enum DifficultLevel {
+  A1
+  A2
+  B1
+  B2
+  C1
+  C2
+}
+
+model Word {
+  id           Int            @id @default(autoincrement())
+  term         String         @unique
+  definition   String
+  example      String
+  difficult    DifficultLevel
+  sessionWords SessionWord[]
+}
+
+model Session {
+  id           Int            @id @default(autoincrement())
+  user         User           @relation(fields: [userId], references: [id])
+  startDate    DateTime
+  endDate      DateTime
+  difficult    DifficultLevel
+  userId       Int
+  sessionWords SessionWord[]
+  createdAt    DateTime
+}
+
+model SessionWord {
+  id                 Int                 @id @default(autoincrement())
+  word               Word                @relation(fields: [wordId], references: [id])
+  session            Session             @relation(fields: [sessionId], references: [id])
+  wordId             Int
+  sessionId          Int
+  sessionWordAnswers SessionWordAnswer[]
+  createdAt          DateTime
+}
+
+model SessionWordAnswer {
+  id            Int         @id @default(autoincrement())
+  answer        String
+  isCorrect     Boolean
+  sessionWord   SessionWord @relation(fields: [sessionWordId], references: [id])
+  sessionWordId Int
+  createdAt     DateTime
+}
