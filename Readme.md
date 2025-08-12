@@ -41,11 +41,15 @@ Este projeto possui dois principais componentes: **backend** (NestJS) e **fronte
    ```sh
    npx prisma migrate deploy
    ```
-5. Inicie o servidor:
+5. Execute o seed:
+    ```sh
+   npm run seed
+   ```
+6. Inicie o servidor:
    ```sh
    npm run start:dev
    ```
-6. O backend estará disponível em [http://localhost:3001](http://localhost:3001)
+7. O backend estará disponível em [http://localhost:3001](http://localhost:3001)
 
 ### 3. Frontend
 
