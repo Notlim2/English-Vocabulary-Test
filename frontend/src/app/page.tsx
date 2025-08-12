@@ -272,12 +272,12 @@ export default function Home() {
     { data: signUpData, loading: signUpLoading, error: signUpError },
   ] = useMutation(SIGN_UP);
   useEffect(() => {
-    if (!loginData?.login?.access_token) {
+    if (typeof window === "undefined" || !loginData?.login?.access_token) {
       return;
     }
-    localStorage.setItem("token", loginData.login.access_token);
+    localStorage?.setItem?.("token", loginData.login.access_token);
     if (loginData?.login?.user?.name) {
-      localStorage.setItem("name", loginData.login.user.name);
+      localStorage?.setItem?.("name", loginData.login.user.name);
     }
     router.push("/sessions");
   }, [loginData, router]);

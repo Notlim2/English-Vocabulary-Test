@@ -50,7 +50,10 @@ const LIST_SESSIONS = gql`
 export default function Sessions() {
   const { data, loading, error } = useQuery(LIST_SESSIONS);
   const name = useMemo(() => {
-    return localStorage.getItem("name") || "Desconhecido";
+    if (typeof window === "undefined") {
+      return;
+    }
+    return localStorage?.getItem?.("name") || "Desconhecido";
   }, []);
   return (
     <Container sx={{ py: 2 }}>
